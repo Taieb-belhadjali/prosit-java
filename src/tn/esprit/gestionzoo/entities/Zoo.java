@@ -1,21 +1,41 @@
+package tn.esprit.gestionzoo.entities;
 public class Zoo {
-    Animal[] animals;
-    String name;
-    String city;
-    final int NBR_CAGES = 25;  // Constante pour le nombre maximum de cages
-    int animalCount;
+    private Animal[] animals;
+    private String name;
+    private  String city;
+    private final int NBR_CAGES = 25;  // Constante pour le nombre maximum de cages
+    private int animalCount;
 
     // Constructeur du zoo
     public Zoo(String name, String city) {
-        this.name = name;
+        setName(name);
         this.city = city;
         this.animals = new Animal[NBR_CAGES]; // Tableau de 25 animaux maximum
         this.animalCount = 0;
     }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        if(name == null || name.length() == 0) {
+            throw new IllegalArgumentException("Name cannot be empty");
+        }
+        this.name = name;
+    }
+    public String getCity() {
+        return city;
+    }
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Animal[] getAnimals() {
+        return animals;
+    }
 
     // Méthode pour ajouter un animal dans le zoo
     public boolean addAnimal(Animal animal) {
-        if (animalCount >= NBR_CAGES) {
+        if (isZooFull()) {
             System.out.println("Le zoo est plein, impossible d'ajouter plus d'animaux.");
             return false;
         }
@@ -32,12 +52,7 @@ public class Zoo {
 
     // Méthode pour vérifier si un animal est déjà dans le zoo
     public boolean isAnimalInZoo(Animal animal) {
-        for (int i = 0; i < animalCount; i++) {
-            if (animals[i].name.equals(animal.name)) {
-                return true;
-            }
-        }
-        return false;
+        return animalCount >= NBR_CAGES;
     }
     public boolean isZooFull(){
         return animalCount >= NBR_CAGES;
@@ -69,7 +84,7 @@ public class Zoo {
         } else {
             System.out.println("Animaux dans le zoo:");
             for (int i = 0; i < animalCount; i++) {
-                System.out.println((i + 1) + ". " + animals[i].name);
+                System.out.println((i + 1) + ". " + animals[i].getName());
             }
         }
     }
